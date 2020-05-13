@@ -13,6 +13,7 @@ MK	=	make --no-print-directory
 
 SRC		=	src/main.c	\
 			src/builtins/cd.c \
+			src/prompt.c
 
 OBJ		=	$(SRC:.c=.o)
 

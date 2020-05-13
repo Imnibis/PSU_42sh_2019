@@ -8,5 +8,5 @@
 int cdir(char *address)
 {
     if (chdir(address) != 0)
-        perror("chdir() to ", address, "failed");
+        perror("cd to ", address, "failed");
 }
