@@ -5,8 +5,13 @@
 ** cd.c
 */
 
-int cdir(char *address)
+#include "tools.h"
+#include "linked.h"
+
+int cdir(char *address_to_go, dictionary_t *env)
 {
-    if (chdir(address) != 0)
-        perror("cd to ", address, "failed");
+    char *old_dir = dict_get(env, "OLDPWD");
+
+    if (chdir(address_to_go) != 0)
+        perror("cd to ", address_to_go, "failed");
 }
