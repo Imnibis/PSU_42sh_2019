@@ -27,6 +27,7 @@ char *get_current_dir(dictionary_t *env)
     int slash_count = 0;
     int count = 0;
 
+    if (current_dir == 0) return 0;
     while (current_dir[incr] != 0) {
         if (current_dir[incr] == '/')
             slash_count++;
@@ -43,13 +44,21 @@ char *get_current_dir(dictionary_t *env)
 
 int display_prompt(dictionary_t *env)
 {
-    char *user = dict_get(env, "USER");
+    char *user;
     char *host = read_file("/etc/hostname");
-    char *current_dir = get_current_dir(env);
-    char *prompt1 = my_strconcat(my_strconcat("[", user), "@");
-    char *prompt2 = my_strconcat(my_strconcat(host, " "), current_dir);
-    char *final_prompt = my_strconcat(my_strconcat(prompt1, prompt2), "]$");
+    char *current_dir;
+    char *prompt1;
+    char *prompt2;
+    char *final_prompt;
 
+    if (dict_get(env, "USER") == 0 || get_current_dir(env) == 0) return 84;
+    else {
+        user = dict_get(env, "USER");
+        current_dir = get_current_dir(env);
+        prompt1 = my_strconcat(my_strconcat("[", user), "@");
+        prompt2 = my_strconcat(my_strconcat(host, " "), current_dir);
+        final_prompt = my_strconcat(my_strconcat(prompt1, prompt2), "]$");
+    }
     my_printf("%S ", final_prompt);
     return 0;
 }
