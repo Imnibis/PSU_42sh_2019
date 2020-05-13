@@ -12,6 +12,7 @@ RM	=	rm -f
 MK	=	make --no-print-directory
 
 SRC		=	src/main.c	\
+			src/builtins/cd.c \
 
 OBJ		=	$(SRC:.c=.o)
 
