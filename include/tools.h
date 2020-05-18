@@ -108,5 +108,6 @@ int my_str_isnum(char const *str);
 int my_str_endswith(char *str, char *with);
 int irand(int min, int max);
 double sqrt(double nb);
+int is_whitespace(char c);
 
 #endif
