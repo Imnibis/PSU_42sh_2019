@@ -47,7 +47,9 @@ int display_prompt(dictionary_t *env)
     char *user;
     char *host = read_file("/etc/hostname");
     char *current_dir;
+    int length = my_strlen(host) - 1;
 
+    host[length] = 0;
     if (dict_get(env, "USER") == 0 || get_current_dir(env) == 0)
         return 84;
     user = dict_get(env, "USER");
