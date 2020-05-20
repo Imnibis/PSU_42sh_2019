@@ -48,11 +48,10 @@ int display_prompt(dictionary_t *env)
     char *host = read_file("/etc/hostname");
     char *current_dir;
 
-    if (dict_get(env, "USER") == 0 || get_current_dir(env) == 0) return 84;
-    else {
-        user = dict_get(env, "USER");
-        current_dir = get_current_dir(env);
-    }
-    my_printf("[%S@%S %S]$ ", user, host, current_dir);
+    if (dict_get(env, "USER") == 0 || get_current_dir(env) == 0)
+        return 84;
+    user = dict_get(env, "USER");
+    current_dir = get_current_dir(env);
+    my_printf("[%s@%s %s]$ ", user, host, current_dir);
     return 0;
 }
