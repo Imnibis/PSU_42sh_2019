@@ -16,7 +16,6 @@ SRC		=	src/main.c	\
 			src/core/parse.c \
 			src/core/environment.c \
 			src/builtins/cd.c \
-			src/core/prompt.c \
 			src/builtins/echo.c \
 
 OBJ		=	$(SRC:.c=.o)
