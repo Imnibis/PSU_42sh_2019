@@ -7,6 +7,7 @@
 
 #include "tools.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 char *str_delimit(char *str, int first)
 {
@@ -44,14 +45,14 @@ void my_putstrb(char *str)
 
 int echo(char *str, char arg)
 {
-    int bsl = 1;
-
     str = str_delimit(str, 0);
     if (arg == 'n') {
-        printf("%s%", str);
+        printf("%s", str);
     }
     else if (arg == 'e')
         my_putstrb(str);
     else
         my_putstr(str);
+
+    return 0;
 }

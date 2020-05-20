@@ -10,6 +10,7 @@
 #define my_abs(nb) ((nb < 0) ? -(nb) : (nb))
 #define square(nb) ((nb) * (nb))
 #define distance(a, b) my_abs(sqrt(square(a.x - b.x) + square(a.y - b.y)))
+#define UNUSED(x) ((x) = (x))
 
 typedef struct counter {
     int i;
@@ -109,5 +110,6 @@ int my_str_endswith(char *str, char *with);
 int irand(int min, int max);
 double sqrt(double nb);
 int is_whitespace(char c);
+char *my_strjoin(char **arr, char *glue);
 
 #endif

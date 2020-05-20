@@ -21,7 +21,9 @@ typedef struct expression {
     char **argv;
 } expression_t;
 
-int parse_input(char *command);
+char *get_command_line(void);
+int display_prompt(dictionary_t *env);
+int parse_input(char *command, dictionary_t *env_vars, dictionary_t *builtins);
 dictionary_t *env_init(char **envp);
 char *env_get(dictionary_t *env_vars, char *var);
 dictionary_t *env_set(dictionary_t *env_vars, char *index, char *value);

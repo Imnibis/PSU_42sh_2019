@@ -12,8 +12,10 @@ RM	=	rm -f
 MK	=	make --no-print-directory
 
 SRC		=	src/main.c	\
+			src/core/prompt.c \
+			src/core/parse.c \
+			src/core/environment.c \
 			src/builtins/cd.c \
-			src/prompt.c \
 			src/builtins/echo.c \
 
 OBJ		=	$(SRC:.c=.o)
@@ -92,11 +94,11 @@ debug:	linked tools $(OBJ)
 		@$(CC) -g3 -c $(SRC) $(CFLAGS)
 		@echo -e "\033[01m\033[32mCompilation done: ${NAME}\033[00m"
 
-clean:	linked_clean tools_clean 
+clean:	linked_clean tools_clean
 		@echo -e "\033[01m\033[31mCleaning objects...\033[00m"
 		@$(RM) $(OBJ)
 
-fclean:		clean linked_fclean tools_fclean 
+fclean:		clean linked_fclean tools_fclean
 		@echo -e "\033[01m\033[31mCleaning binary...\033[00m"
 		@$(RM) $(NAME)
 
