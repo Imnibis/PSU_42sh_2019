@@ -51,6 +51,7 @@ SRC 		=	 my_compute_power_rec.c	\
 			 my_str_isnum.c	\
 			 my_str_endswith.c	\
 			 random.c	\
+			 my_strjoin.c	\
 
 CFLAGS		+=	-W -Wall -Wextra -pedantic
 CFLAGS		+=	-I../../include

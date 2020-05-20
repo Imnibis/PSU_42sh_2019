@@ -39,7 +39,7 @@ char *get_current_dir(dictionary_t *env)
             count++;
         incr++;
     }
-    return current_dir = dict_get(env, "PWD") + incr;
+    return current_dir = (char *) dict_get(env, "PWD") + incr;
 }
 
 int display_prompt(dictionary_t *env)
