@@ -12,7 +12,6 @@ RM	=	rm -f
 MK	=	make --no-print-directory
 
 SRC		=	src/main.c	\
-			src/core/prompt.c \
 			src/core/parse.c \
 			src/core/environment.c \
 			src/builtins/cd.c \
