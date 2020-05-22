@@ -50,10 +50,10 @@ int builtin_echo(int argc, char **argv, dictionary_t **env)
     if (argc >= 3 && my_strlen(argv[2]) >= 2)
         arg = argv[2][1];
     if (argc >= 2)
-        str = argv[1];
+        str = argc > 2 ? argv[2] : argv[1];
     str = str_delimit(str, 0);
     if (arg == 'n') {
-        printf("%s", str);
+        my_printf("%s", str);
     }
     else if (arg == 'e')
         my_putstrb(str);

@@ -11,19 +11,20 @@
 
 dictionary_t *dict_remove(dictionary_t *dict, char *index)
 {
-    dictionary_t *iterator = dict;
     dictionary_t *temp = dict;
     dictionary_t *prev = 0;
 
-    while (iterator) {
+    for (dictionary_t *iterator = dict; iterator; iterator = iterator->next) {
         if (!my_strcmp(iterator->index, index) && !prev) {
             temp = iterator->next;
-            return temp->next;
-        } else {
+            free(iterator);
+            return temp;
+        } else if (!my_strcmp(iterator->index, index)) {
             prev->next = iterator->next;
+            free(iterator);
+            return dict;
         }
         prev = iterator;
-        iterator = iterator->next;
     }
     return temp;
 }

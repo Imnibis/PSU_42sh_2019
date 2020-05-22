@@ -30,7 +30,7 @@ int builtin_setenv(int argc, char **argv, dictionary_t **env)
 int builtin_unsetenv(int argc, char **argv, dictionary_t **env)
 {
     if (argc < 2) {
-        my_printf("unsetenv: Too few arguments.");
+        my_printf("unsetenv: Too few arguments.\n");
         return 1;
     }
     *env = dict_remove(*env, argv[1]);
