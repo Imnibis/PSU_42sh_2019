@@ -31,3 +31,9 @@ char **my_strsplit(char *str, char c)
     result[count + 1] = 0;
     return result;
 }
+
+void free_split(char **split)
+{
+    free(split[0]);
+    free(split);
+}

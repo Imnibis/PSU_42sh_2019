@@ -111,7 +111,6 @@ int irand(int min, int max);
 double sqrt(double nb);
 int is_whitespace(char c);
 char *my_strjoin(char **arr, char *glue);
-int sset_env(char *arg);
-int unset_env(char *name);
+void free_split(char **split);
 
 #endif

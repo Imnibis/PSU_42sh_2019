@@ -54,27 +54,34 @@ linked_list_t *create_word_list(char *str)
     return list;
 }
 
-int parse_command(char *command, dictionary_t *env_vars, dictionary_t *builtins)
+int parse_command(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins)
 {
     linked_list_t *word_list = create_word_list(command);
     int argc = ll_len(word_list);
+    char **argv;
+    int i = 0;
+    int return_value;
 
     if (!word_list) return 0;
-    UNUSED(env_vars);
-    UNUSED(builtins);
-    command = word_list->data;
-    for (linked_list_t *i = word_list; i; i = i->next)
-        my_printf("%s/", i->data);
-    // TODO: exec program/builtin
-    my_printf("\n");
-    return 0;
+    argv = malloc(sizeof(char *) * argc);
+    for (linked_list_t *list = word_list; list; list = list->next) {
+        argv[i] = my_strdup(list->data);
+        i++;
+    }
+    ll_free(word_list, no_free);
+    return_value = builtin_check(argc, argv, env_vars, builtins);
+    for (i = 0; i < argc; i++)
+        free(argv[i]);
+    free(argv);
+    return return_value;
 }
 
-int parse_input(char *command, dictionary_t *env_vars, dictionary_t *builtins)
+int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins)
 {
     linked_list_t *command_list = create_command_list(command);
     int return_value = 0;
-    int operator = OPERATOR_NONE;
+    int operator = OPERATOR_NEWLINE;
 
     if (!command || !my_strcmp(command, "")) return 0;
     for (linked_list_t *i = command_list; i; i = i->next) {
@@ -85,11 +92,9 @@ int parse_input(char *command, dictionary_t *env_vars, dictionary_t *builtins)
             my_printf("%s\n", i->data);
             continue;
         }
-        if (operator == OPERATOR_NONE || operator == OPERATOR_NEWLINE ||
-            (operator == OPERATOR_AND && !return_value) ||
-            (operator == OPERATOR_OR && return_value)) {
+        if (operator == OPERATOR_NEWLINE || (operator == OPERATOR_AND &&
+            !return_value) || (operator == OPERATOR_OR && return_value))
             return_value = parse_command(i->data, env_vars, builtins);
-        }
     }
     ll_free(command_list, free);
     return return_value;

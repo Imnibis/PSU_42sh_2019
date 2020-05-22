@@ -15,10 +15,13 @@ SRC		=	src/main.c	\
 			src/core/prompt.c \
 			src/core/parse.c \
 			src/core/environment.c \
+			src/core/builtin_check.c \
 			src/builtins/cd.c \
+			src/builtins/dict.c \
 			src/builtins/echo.c \
 			src/builtins/env.c	\
-			src/builtins/exit.c
+			src/builtins/exit.c	\
+			src/extra/get_uid.c	\
 
 OBJ		=	$(SRC:.c=.o)
 
@@ -93,7 +96,7 @@ json_fclean:
 
 debug:	linked tools $(OBJ)
 		@echo -e "\033[01m\033[31mBuilding...\033[00m"
-		@$(CC) -g3 -c $(SRC) $(CFLAGS)
+		@$(CC) -g3 $(SRC) $(CFLAGS)
 		@echo -e "\033[01m\033[32mCompilation done: ${NAME}\033[00m"
 
 clean:	linked_clean tools_clean

@@ -5,8 +5,7 @@
 ** prompt
 */
 
-#include "tools.h"
-#include "linked.h"
+#include "shell.h"
 #include <stdio.h>
 
 char *get_command_line(void)
@@ -49,11 +48,12 @@ int display_prompt(dictionary_t *env)
     char *current_dir;
     int length = my_strlen(host) - 1;
 
-    host[length] = 0;
-    if (dict_get(env, "USER") == 0 || get_current_dir(env) == 0)
-        return 84;
+    if (host)
+        host[length] = 0;
     user = dict_get(env, "USER");
     current_dir = get_current_dir(env);
-    my_printf("[%s@%s %s]$ ", user, host, current_dir);
+    my_printf("[%s%s%s %s]%c ", user ? user : "",
+        user && host ? "@" : "", host ? host : "",
+        current_dir ? current_dir : "", get_uid(user) == 0 ? '#' : '$');
     return 0;
 }

@@ -5,7 +5,7 @@
 ** echo.c
 */
 
-#include "tools.h"
+#include "shell.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -42,8 +42,15 @@ void my_putstrb(char *str)
     }
 }
 
-int echo(char *str, char arg)
+int builtin_echo(int argc, char **argv, dictionary_t **env)
 {
+    char *str = "";
+    char arg = 'a';
+
+    if (argc >= 3 && my_strlen(argv[2]) >= 2)
+        arg = argv[2][1];
+    if (argc >= 2)
+        str = argv[1];
     str = str_delimit(str, 0);
     if (arg == 'n') {
         printf("%s", str);

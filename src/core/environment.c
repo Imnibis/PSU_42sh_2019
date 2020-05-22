@@ -22,22 +22,12 @@ dictionary_t *env_init(char **envp)
     return env_vars;
 }
 
-char *env_get(dictionary_t *env_vars, char *var)
-{
-    return dict_get(env_vars, var);
-}
-
 dictionary_t *env_set(dictionary_t *env_vars, char *index, char *value)
 {
-    if (dict_get(env_vars, index) == UNDEFINED) env_vars =
+    if (!dict_get(env_vars, index)) env_vars =
         dict_add(env_vars, my_strdup(index), my_strdup(value));
     else dict_set(env_vars, index, my_strdup(value));
     return env_vars;
-}
-
-dictionary_t *env_del(dictionary_t *env_vars, char *index)
-{
-    return dict_remove(env_vars, index);
 }
 
 char **env_to_array(dictionary_t *env_vars)

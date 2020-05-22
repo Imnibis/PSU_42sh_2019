@@ -30,14 +30,19 @@ typedef struct command_return {
 
 char *get_command_line(void);
 int display_prompt(dictionary_t *env);
-int parse_input(char *command, dictionary_t *env_vars, dictionary_t *builtins);
+int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins);
 dictionary_t *env_init(char **envp);
-char *env_get(dictionary_t *env_vars, char *var);
 dictionary_t *env_set(dictionary_t *env_vars, char *index, char *value);
-dictionary_t *env_del(dictionary_t *env_vars, char *index);
 char **env_to_array(dictionary_t *env_vars);
-int cdir(int argc, char **argv, dictionary_t *envp);
-int echo(int argc, char **argv, dictionary_t *envp);
-int exit_shell(int argc, char **argv, dictionary_t *envp);
+int builtin_cd(int argc, char **argv, dictionary_t **env_vars);
+int builtin_exit(int argc, char **argv, dictionary_t **env_vars);
+int builtin_echo(int argc, char **argv, dictionary_t **env_vars);
+int builtin_env(int argc, char **argv, dictionary_t **env_vars);
+int builtin_setenv(int argc, char **argv, dictionary_t **env_vars);
+int builtin_unsetenv(int argc, char **argv, dictionary_t **env_vars);
+dictionary_t *builtin_init(void);
+int get_uid(char *username);
+int builtin_check(int argc, char **argv, dictionary_t **env,
+    dictionary_t *builtins);
 
 #endif /* !SHELL_H_ */

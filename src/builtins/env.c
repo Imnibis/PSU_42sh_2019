@@ -7,65 +7,31 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "tools.h"
+#include "shell.h"
 
-char *get_name(char *arg)
+int builtin_env(int argc, char **argv, dictionary_t **env)
 {
-    int i = 0;
-    int p = 0;
-    char *name;
-
-    while (arg[i] != ' ')
-        i++;
-    name = malloc(sizeof(char) * i);
-    while (p != i) {
-        name[p] = arg[p];
-        p++;
-    }
-    name[p] = '\0';
-    return name;
+    for (dictionary_t *i = *env; i; i = i->next)
+        my_printf("%s=%s\n", i->index, i->data);
+    return 0;
 }
 
-char *get_value(char *arg)
+int builtin_setenv(int argc, char **argv, dictionary_t **env)
 {
-    int i = 0;
-    int p = 0;
-    char *value;
+    char *value = "";
 
-    while (arg[i] != '=')
-        i++;
-    while (arg[i] == ' ' || arg[i] == '=')
-        i++;
-    value = malloc(sizeof(char) * my_strlen(arg) - i);
-    while (arg[i]) {
-        value[p] = arg[i];
-        p++;
-        i++;
-    }
-    value[p + 1] = 0;
-    return value;
+    if (argc == 1)
+        return builtin_env(0, 0, env);
+    else if (argc >= 3)
+        value = argv[2];
+    *env = env_set(*env, argv[1], value);
 }
 
-int sset_env(char *arg)
+int builtin_unsetenv(int argc, char **argv, dictionary_t **env)
 {
-    char *name = get_name(arg);
-    char *value = get_value(arg);
-
-    if (setenv(name, value, 0) == -1) {
-        my_putstr("Error, no enought argument");
-        return 84;
+    if (argc < 2) {
+        my_printf("unsetenv: Too few arguments.");
+        return 1;
     }
-    else
-        return 0;
-}
-
-int unset_env(char *name)
-{
-    if (unsetenv(name) == 0) {
-        my_putstr("succes\n");
-        return 0;
-    }
-    else {
-        return 84;
-    }
+    *env = dict_remove(*env, argv[1]);
 }
