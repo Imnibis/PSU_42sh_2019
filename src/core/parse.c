@@ -25,8 +25,8 @@ linked_list_t *create_command_list(char *str)
         str[i] = '\0';
         list = ll_append(list, my_strdup(beginning));
         list = ll_append(list, my_strdup(which));
-        beginning = str + i + 1 + (which[0] != ';');
-        if (which[0] != ';') i++;
+        beginning = str + i + my_strlen(which);
+        i += my_strlen(which) - 1;
     }
     if (beginning != str + i) list = ll_append(list, my_strdup(beginning));
     return list;
@@ -57,12 +57,12 @@ linked_list_t *create_word_list(char *str)
 int parse_command(char *command, dictionary_t *env_vars, dictionary_t *builtins)
 {
     linked_list_t *word_list = create_word_list(command);
+    int argc = ll_len(word_list);
 
+    if (!word_list) return 0;
     UNUSED(env_vars);
     UNUSED(builtins);
     command = word_list->data;
-    word_list = word_list->next;
-    my_printf("%s/", command);
     for (linked_list_t *i = word_list; i; i = i->next)
         my_printf("%s/", i->data);
     // TODO: exec program/builtin
@@ -86,8 +86,8 @@ int parse_input(char *command, dictionary_t *env_vars, dictionary_t *builtins)
             continue;
         }
         if (operator == OPERATOR_NONE || operator == OPERATOR_NEWLINE ||
-            (operator == OPERATOR_AND && return_value) ||
-            (operator == OPERATOR_OR && !return_value)) {
+            (operator == OPERATOR_AND && !return_value) ||
+            (operator == OPERATOR_OR && return_value)) {
             return_value = parse_command(i->data, env_vars, builtins);
         }
     }

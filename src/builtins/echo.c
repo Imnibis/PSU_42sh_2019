@@ -40,7 +40,6 @@ void my_putstrb(char *str)
             my_putchar(str[i]);
         i++;
     }
-
 }
 
 int echo(char *str, char arg)
@@ -53,6 +52,5 @@ int echo(char *str, char arg)
         my_putstrb(str);
     else
         my_putstr(str);
-
     return 0;
 }

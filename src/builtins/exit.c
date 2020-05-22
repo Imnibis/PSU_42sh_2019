@@ -5,11 +5,9 @@
 ** exit.c
 */
 
-#include "tools.h"
-#include <unistd.h>
-#include <stdlib.h>
+#include "shell.h"
 
-void my_exit(int value)
+int exit_shell(int exit_status)
 {
-    exit(value);
+    exit(exit_status);
 }
