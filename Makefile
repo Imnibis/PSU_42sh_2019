@@ -17,6 +17,8 @@ SRC		=	src/main.c	\
 			src/core/environment.c \
 			src/builtins/cd.c \
 			src/builtins/echo.c \
+			src/builtins/env.c	\
+			src/builtins/exit.c
 
 OBJ		=	$(SRC:.c=.o)
 
