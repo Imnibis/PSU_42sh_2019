@@ -6,6 +6,7 @@
 */
 
 #include "shell.h"
+#include <stdlib.h>
 
 int builtin_exit(int argc, char **argv, dictionary_t **env)
 {

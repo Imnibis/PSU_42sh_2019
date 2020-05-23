@@ -17,7 +17,7 @@ int builtin_echo(int argc, char **argv)
     }
     if (my_strcmp(argv[1], "-n") == 0)
         i = 2;
-    for (i; i < argc; i++) {
+    for(i; i < argc; i++) {
         my_putstr(argv[i]);
         if (i < argc - 1) my_putstr(" ");
     }
