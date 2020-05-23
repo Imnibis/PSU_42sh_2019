@@ -44,5 +44,12 @@ dictionary_t *builtin_init(void);
 int get_uid(char *username);
 int builtin_check(int argc, char **argv, dictionary_t **env,
     dictionary_t *builtins);
+int get_path_line(char *path);
+char **malloc_parsed_path(char **parsed_path, char *path);
+char **parse_path(char *path);
+int check_folder(char *folder_path, char *binary);
+char *check_existence(dictionary_t *env, char *binary_name);
+int check_right(char *binary_path, char *binary_name);
+int check_command(int argc, char **argv, dictionary_t *env);
 
 #endif /* !SHELL_H_ */
