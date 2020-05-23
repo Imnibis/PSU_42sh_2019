@@ -23,7 +23,6 @@ SRC		=	src/main.c	\
 			src/builtins/exit.c	\
 			src/extra/get_uid.c	\
 			src/core/path_handling.c	\
-			src/core/command_check.c	\
 
 OBJ		=	$(SRC:.c=.o)
 
