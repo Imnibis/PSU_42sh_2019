@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <errno.h>
+#include <stdlib.h>
 
 char *cd_replace_home(dictionary_t *env_vars, char *dir)
 {
