@@ -37,6 +37,8 @@ char *check_existence(dictionary_t *env, char *binary_name)
         if (binary_exist == 0) return parsed_path[line];
         line++;
     }
+    binary_exist = check_folder(dict_get(env, "PWD"), binary_name);
+    if (binary_exist == 0) return dict_get(env, "PWD");
     return 0;
 }
 
@@ -51,14 +53,14 @@ int check_right(char *binary_path, char *binary_name)
 
 int check_command(int argc, char **argv, dictionary_t *env)
 {
-    char *binary_name = /*Entrer le nom du binaire à vérifier*/;
+    char *binary_name = /*Entrer le nom du binaire à rechercher ici*/;
     char *bin_folder = check_existence(env, binary_name);
     int right;
 
     if (bin_folder != 0) right = check_right(bin_folder, binary_name);
-    else return -1;
+    else return 1;
     if (right == 0) {
-    /*Continuer le code ici*/
-    } else return -1;
+        /*Continuer le code ici*/
+    } else return 2;
     return 0;
 }
