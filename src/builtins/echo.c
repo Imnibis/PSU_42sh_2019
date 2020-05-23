@@ -7,7 +7,7 @@
 
 #include "shell.h"
 
-int builtin_echo(int argc, char **argv, dictionary_t **env)
+int builtin_echo(int argc, char **argv)
 {
     int i = 1;
 

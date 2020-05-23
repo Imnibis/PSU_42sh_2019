@@ -36,7 +36,7 @@ dictionary_t *env_set(dictionary_t *env_vars, char *index, char *value);
 char **env_to_array(dictionary_t *env_vars);
 int builtin_cd(int argc, char **argv, dictionary_t **env_vars);
 int builtin_exit(int argc, char **argv, dictionary_t **env_vars);
-int builtin_echo(int argc, char **argv, dictionary_t **env_vars);
+int builtin_echo(int argc, char **argv);
 int builtin_env(int argc, char **argv, dictionary_t **env_vars);
 int builtin_setenv(int argc, char **argv, dictionary_t **env_vars);
 int builtin_unsetenv(int argc, char **argv, dictionary_t **env_vars);
