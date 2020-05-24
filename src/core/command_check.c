@@ -1,8 +1,8 @@
 /*
-** EPITECH PROJECT, 2020
-** command_check
+** EPITECH PROJECT, 2019
+** PSU_42sh_2019
 ** File description:
-** command_check
+** command_check.c
 */
 
 #include "shell.h"

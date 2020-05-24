@@ -1,8 +1,8 @@
 /*
-** EPITECH PROJECT, 2020
-** main
+** EPITECH PROJECT, 2019
+** PSU_42sh_2019
 ** File description:
-** main
+** main.c
 */
 
 #include "shell.h"
