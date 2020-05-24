@@ -73,5 +73,8 @@ command_return_t parse_pipes(char *command, dictionary_t **env_vars,
 command_return_t parse_command(char *command, dictionary_t **env_vars,
     dictionary_t *builtins, pipe_param_t params);
 int display_history(int argc, char **argv, dictionary_t **env);
+int write_to_his(int argc, char **argv, dictionary_t **env ,const char *text);
+int create_alias(int argc, char **argv, dictionary_t **env ,const char *text);
+int display_aliases(int argc, char **argv, dictionary_t **env);
 
 #endif /* !SHELL_H_ */
