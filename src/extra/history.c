@@ -15,7 +15,7 @@ int write_to_his(int argc, char **argv, dictionary_t **env ,const char *text)
     UNUSED(argc);
     UNUSED(argv);
     if (f == NULL) {
-        perror("Display history");
+        perror("write to history");
         return 84;
     }
     fprintf(f, "%s", text);
