@@ -10,6 +10,8 @@
 #include "linked.h"
 #include "tools.h"
 
+#define _XOPEN_SOURCE 700
+
 #define OPERATOR_NONE 0
 #define OPERATOR_OR 1
 #define OPERATOR_AND 2

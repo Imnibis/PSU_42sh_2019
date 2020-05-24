@@ -9,5 +9,5 @@
 
 int pipe(int argc, char **argv, dictionary_t *env)
 {
-    return 0
+    return 0;
 }
