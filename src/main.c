@@ -22,6 +22,8 @@ int main(int argc, char **argv, char **envp)
         while (var == 1) {
             display_prompt(env);
             command_line = get_command_line();
+            if (!command_line)
+                break;
             parse_input(command_line, &env, builtins);
         }
     } else {
