@@ -8,16 +8,17 @@
 #include "shell.h"
 #include <stdio.h>
 
-int write_to_his(int argc, char **argv, dictionary_t **env)
+int write_to_his(int argc, char **argv, dictionary_t **env ,const char *text)
 {
     FILE *f = fopen(my_strconcat(dict_get(*env, "HOME"), "/.42sh_his"), "a");
-    const char *text = "Write the file";
 
+    UNUSED(argc);
+    UNUSED(argv);
     if (f == NULL) {
         perror("Display history");
         return 84;
     }
-    fprintf(f, "%s\n", text);
+    fprintf(f, "%s", text);
     fclose(f);
 }
 
