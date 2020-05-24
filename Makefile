@@ -24,6 +24,7 @@ SRC		=	src/main.c	\
 			src/builtins/env.c	\
 			src/builtins/exit.c	\
 			src/extra/get_uid.c	\
+			src/core/pipe.c
 
 OBJ		=	$(SRC:.c=.o)
 
