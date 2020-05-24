@@ -28,7 +28,7 @@ int display_aliases(int argc, char **argv, dictionary_t **env)
     UNUSED(argc);
     UNUSED(argv);
     if (fopen(my_strconcat(dict_get(*env, "HOME"), "/.42_alias"), "r") == NULL){
-        perror("Display history");
+        perror("Display alias");
         return 84;
     }
     my_printf(read_file(my_strconcat(dict_get(*env, "HOME"), "/.42_alias")));
