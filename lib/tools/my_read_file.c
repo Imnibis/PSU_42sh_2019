@@ -18,14 +18,17 @@ char *read_file(char *filepath)
     int file;
     struct stat stats;
 
-    file = open(filepath, O_RDONLY);
+    if (filepath)
+        file = open(filepath, O_RDONLY);
+    else file = 0;
     if (file == -1)
         return 0;
-    stat(filepath, &stats);
+    fstat(file, &stats);
     buff = malloc(sizeof(char) * (stats.st_size + 1));
     while ((len = read(file, buff + offset, stats.st_size - offset)) > 0)
         offset = offset + len;
     buff[offset] = '\0';
-    close(file);
+    if (file)
+        close(file);
     return buff;
 }
