@@ -25,6 +25,7 @@ SRC		=	src/main.c	\
 			src/builtins/env.c	\
 			src/builtins/exit.c	\
 			src/extra/get_uid.c	\
+			src/extra/history.c
 
 OBJ		=	$(SRC:.c=.o)
 

@@ -53,5 +53,6 @@ int check_folder(char *folder_path, char *binary);
 char *check_existence(dictionary_t *env, char *binary_name);
 int check_command(char **argv, dictionary_t *env);
 int exec(char *binary, char **argv, dictionary_t *env);
+int display_history(int argc, char **argv, dictionary_t **env);
 
 #endif /* !SHELL_H_ */
