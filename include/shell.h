@@ -49,7 +49,6 @@ char **malloc_parsed_path(char **parsed_path, char *path);
 char **parse_path(char *path);
 int check_folder(char *folder_path, char *binary);
 char *check_existence(dictionary_t *env, char *binary_name);
-int check_right(char *binary_path, char *binary_name);
 int check_command(int argc, char **argv, dictionary_t *env);
 
 #endif /* !SHELL_H_ */

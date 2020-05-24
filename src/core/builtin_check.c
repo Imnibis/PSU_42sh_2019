@@ -14,8 +14,6 @@ int builtin_check(int argc, char **argv, dictionary_t **env,
 
     if (builtin)
         return builtin(argc, argv, env);
-    else {
-        // TODO: exec program
-    }
-    return 0;
+    else
+        return check_command(argc, argv, *env);
 }
