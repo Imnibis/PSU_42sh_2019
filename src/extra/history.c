@@ -8,9 +8,26 @@
 #include "shell.h"
 #include <stdio.h>
 
+int write_to_his(int argc, char **argv, dictionary_t **env ,const char *text)
+{
+    FILE *f = fopen(my_strconcat(dict_get(*env, "HOME"), "/.42sh_his"), "a");
+
+    UNUSED(argc);
+    UNUSED(argv);
+    if (f == NULL) {
+        perror("write to history");
+        return 84;
+    }
+    fprintf(f, "%s", text);
+    fclose(f);
+    return 0;
+}
+
 int display_history(int argc, char **argv, dictionary_t **env)
 {
-    if(fopen(my_strconcat(dict_get(*env, "HOME"), "/.42sh_his"), "r") == NULL){
+    UNUSED(argc);
+    UNUSED(argv);
+    if (fopen(my_strconcat(dict_get(*env, "HOME"), "/.42sh_his"), "r") == NULL){
         perror("Display history");
         return 84;
     }

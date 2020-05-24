@@ -8,7 +8,7 @@
 #include "shell.h"
 #include <stdlib.h>
 
-int builtin_exit(int argc, char **argv, dictionary_t **env)
+command_return_t builtin_exit(int argc, char **argv, dictionary_t **env)
 {
     int exit_status = 0;
 

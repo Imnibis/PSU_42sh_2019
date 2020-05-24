@@ -24,6 +24,7 @@ int main(int argc, char **argv, char **envp)
             command_line = get_command_line();
             if (!command_line)
                 break;
+            write_to_his(argc, argv, &env, command_line);
             parse_input(command_line, &env, builtins);
         }
     } else {

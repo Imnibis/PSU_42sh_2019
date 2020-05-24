@@ -54,37 +54,41 @@ linked_list_t *create_word_list(char *str)
     return list;
 }
 
-int parse_command(char *command, dictionary_t **env_vars,
-    dictionary_t *builtins)
+command_return_t parse_command(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins, pipe_param_t params)
 {
     linked_list_t *word_list = create_word_list(command);
-    int argc = ll_len(word_list);
-    char **argv;
     int i = 0;
-    int return_value;
+    command_return_t ret = {"", 0};
+    command_t comm;
 
-    if (!word_list) return 0;
-    argv = malloc(sizeof(char *) * (argc + 1));
+    comm.argc = ll_len(word_list);
+    comm.env = env_vars;
+    comm.stdin = params.stdin;
+    comm.pipe_stdout = params.pipe_stdout;
+    if (!word_list) return ret;
+    comm.command = word_list->data;
+    comm.argv = malloc(sizeof(char *) * (comm.argc + 1));
     for (linked_list_t *list = word_list; list; list = list->next) {
-        argv[i] = my_strdup(list->data);
+        comm.argv[i] = my_strdup(list->data);
         i++;
     }
-    argv[i] = 0;
+    comm.argv[i] = 0;
     ll_free(word_list, no_free);
-    return_value = builtin_check(argc, argv, env_vars, builtins);
-    for (i = 0; i < argc; i++)
-        free(argv[i]);
-    free(argv);
-    return return_value;
+    ret = builtin_check(comm, builtins);
+    for (i = 0; i < comm.argc; i++) free(comm.argv[i]);
+    free(comm.argv);
+    return ret;
 }
 
-int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins)
+command_return_t parse_input(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins)
 {
     linked_list_t *command_list = create_command_list(command);
-    int return_value = 0;
+    command_return_t ret = {"", 0};
     int operator = OPERATOR_NEWLINE;
 
-    if (!command || !my_strcmp(command, "")) return 0;
+    if (!command || !my_strcmp(command, "")) return ret;
     for (linked_list_t *i = command_list; i; i = i->next) {
         if (!my_strcmp(i->data, ";") || !my_strcmp(i->data, "&&") ||
             !my_strcmp(i->data, "||")) {
@@ -93,9 +97,9 @@ int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins)
             continue;
         }
         if (operator == OPERATOR_NEWLINE || (operator == OPERATOR_AND &&
-            !return_value) || (operator == OPERATOR_OR && return_value))
-            return_value = parse_command(i->data, env_vars, builtins);
+            !ret.return_value) || (operator == OPERATOR_OR && ret.return_value))
+            ret = parse_pipes(i->data, env_vars, builtins);
     }
     ll_free(command_list, free);
-    return return_value;
+    return ret;
 }
