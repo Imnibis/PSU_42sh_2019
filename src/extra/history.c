@@ -20,10 +20,13 @@ int write_to_his(int argc, char **argv, dictionary_t **env ,const char *text)
     }
     fprintf(f, "%s", text);
     fclose(f);
+    return 0;
 }
 
 int display_history(int argc, char **argv, dictionary_t **env)
 {
+    UNUSED(argc);
+    UNUSED(argv);
     if (fopen(my_strconcat(dict_get(*env, "HOME"), "/.42sh_his"), "r") == NULL){
         perror("Display history");
         return 84;
