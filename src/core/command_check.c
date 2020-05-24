@@ -31,22 +31,26 @@ char *check_existence(dictionary_t *env, char *binary_name)
     return 0;
 }
 
-int check_command(char **argv, dictionary_t *env)
+command_return_t check_command(command_t command)
 {
-    char *binary_name = argv[0];
-    char *bin = check_existence(env, binary_name);
+    char *binary_name = command.argv[0];
+    char *bin = check_existence(*command.env, binary_name);
+    command_return_t ret;
     int right;
 
+    ret.stdout = 0;
     if (bin != 0) right = access(bin, X_OK);
     else {
-        my_printf("42sh: no such file or directory: %s\n", argv[0]);
-        return 127;
+        my_printf("42sh: no such file or directory: %s\n", command.argv[0]);
+        ret.return_value = 127;
+        return ret;
     }
     if (right == 0) {
-        return exec(bin, argv, env);
+        command.command = bin;
+        return exec(command);
     } else {
-        my_printf("42sh: permission denied: %s\n", argv[0]);
-        return 126;
+        my_printf("42sh: permission denied: %s\n", command.argv[0]);
+        ret.return_value = 126;
+        return ret;
     }
-    return 0;
 }

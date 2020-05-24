@@ -7,13 +7,13 @@
 
 #include "shell.h"
 
-int builtin_check(int argc, char **argv, dictionary_t **env,
-    dictionary_t *builtins)
+command_return_t builtin_check(command_t command, dictionary_t *builtins)
 {
-    int (*builtin)(int, char **, dictionary_t **) = dict_get(builtins, argv[0]);
+    command_return_t (*builtin)(int, char **, dictionary_t **) =
+        dict_get(builtins, command.argv[0]);
 
     if (builtin)
-        return builtin(argc, argv, env);
+        return builtin(command.argc, command.argv, command.env);
     else
-        return check_command(argv, *env);
+        return check_command(command);
 }

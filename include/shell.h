@@ -17,13 +17,24 @@
 #define OPERATOR_AND 2
 #define OPERATOR_NEWLINE 3
 
-typedef struct expression {
+typedef struct pipe_param {
+    int pipe_stdout;
+    char *stdin;
+} pipe_param_t;
+
+typedef struct pipes {
+    int stdin[2];
+    int stdout[2];
+} pipes_t;
+
+typedef struct command {
     char *command;
     int argc;
     char **argv;
+    dictionary_t **env;
     int pipe_stdout;
     char *stdin;
-} expression_t;
+} command_t;
 
 typedef struct command_return {
     char *stdout;
@@ -32,27 +43,35 @@ typedef struct command_return {
 
 char *get_command_line(void);
 int display_prompt(dictionary_t *env);
-int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins);
+command_return_t parse_input(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins);
 dictionary_t *env_init(char **envp);
 dictionary_t *env_set(dictionary_t *env_vars, char *index, char *value);
 char **env_to_array(dictionary_t *env_vars);
-int builtin_cd(int argc, char **argv, dictionary_t **env_vars);
-int builtin_exit(int argc, char **argv, dictionary_t **env_vars);
-int builtin_echo(int argc, char **argv, dictionary_t **env);
-int builtin_env(int argc, char **argv, dictionary_t **env_vars);
-int builtin_setenv(int argc, char **argv, dictionary_t **env_vars);
-int builtin_unsetenv(int argc, char **argv, dictionary_t **env_vars);
+command_return_t builtin_cd(int argc, char **argv, dictionary_t **env_vars);
+command_return_t builtin_exit(int argc, char **argv, dictionary_t **env_vars);
+command_return_t builtin_echo(int argc, char **argv, dictionary_t **env);
+command_return_t builtin_env(int argc, char **argv, dictionary_t **env_vars);
+command_return_t builtin_setenv(int argc, char **argv, dictionary_t **env_vars);
+command_return_t builtin_unsetenv(int argc, char **argv, dictionary_t **env_vars);
 dictionary_t *builtin_init(void);
 int get_uid(char *username);
-int builtin_check(int argc, char **argv, dictionary_t **env,
-    dictionary_t *builtins);
+command_return_t builtin_check(command_t command, dictionary_t *builtins);
 int get_path_line(char *path);
 char **malloc_parsed_path(char **parsed_path, char *path);
 char **parse_path(char *path);
 int check_folder(char *folder_path, char *binary);
 char *check_existence(dictionary_t *env, char *binary_name);
-int check_command(char **argv, dictionary_t *env);
-int exec(char *binary, char **argv, dictionary_t *env);
+command_return_t check_command(command_t command);
+command_return_t exec(command_t command);
+void signal_handler(int sig);
+command_return_t parent_exec(command_t command, pipes_t pipes,
+    int child_pid);
+void child_exec(command_t command, pipes_t pipes);
+command_return_t parse_pipes(char *command, dictionary_t **env_vars,
+    dictionary_t *builtin);
+command_return_t parse_command(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins, pipe_param_t params);
 int display_history(int argc, char **argv, dictionary_t **env);
 
 #endif /* !SHELL_H_ */
