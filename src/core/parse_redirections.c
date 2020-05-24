@@ -31,11 +31,17 @@ linked_list_t *create_redirection_list(char *str)
     return list;
 }
 
-command_return_t parse_redirections(char *command)
+command_return_t parse_redirections(char *command, dictionary_t **env_vars,
+    dictionary_t *builtins, pipe_param_t params)
 {
     linked_list_t *parsed = create_redirection_list(command);
+    int append_to_stdin = 0;
+    char *command_to_execute = "";
 
     for (linked_list_t *i = parsed; i; i = i->next) {
-
+        if (!my_strcmp(i->data, "<<") || !my_strcmp(i->data, "<")) {
+            append_to_stdin = 1;
+            continue;
+        }
     }
 }

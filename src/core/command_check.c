@@ -49,16 +49,8 @@ command_return_t check_command(command_t command)
         return ret;
     }
     if (right == 0) {
-<<<<<<< HEAD
-        printf("%s, %s, %s\n",argv[0],argv[1],argv[2]);
-        if (!parcour_str(argv))
-            exit (0);
-        execvp("ls", argv);
-        // return exec(bin, argv, env);
-=======
         command.command = bin;
         return exec(command);
->>>>>>> 9ea4f34c3ae4c0998dbc28005ec05071b798817f
     } else {
         my_printf("42sh: permission denied: %s\n", command.argv[0]);
         ret.return_value = 126;

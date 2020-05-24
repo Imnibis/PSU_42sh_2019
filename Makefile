@@ -17,7 +17,6 @@ SRC		=	src/main.c	\
 			src/core/environment.c \
 			src/core/builtin_check.c \
 			src/core/command_check.c \
-			src/core/redirection.c \
 			src/core/pipe.c	\
 			src/core/exec.c \
 			src/builtins/cd.c \
