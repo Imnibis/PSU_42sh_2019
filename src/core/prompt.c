@@ -52,6 +52,7 @@ int display_prompt(dictionary_t *env)
         host[length] = 0;
     user = dict_get(env, "USER");
     current_dir = get_current_dir(env);
+    current_dir = my_strlen(current_dir) ? current_dir : "/";
     my_printf("[%s%s%s %s]%c ", user ? user : "",
         user && host ? "@" : "", host ? host : "",
         current_dir ? current_dir : "", get_uid(user) == 0 ? '#' : '$');
