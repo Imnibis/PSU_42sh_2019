@@ -9,6 +9,7 @@
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
+#include <stdlib.h>
 
 volatile __sig_atomic_t interrupt = 0;
 
@@ -39,20 +40,19 @@ int wait_loop(int child)
     }
 }
 
-int exec(char *binary, char **argv, dictionary_t *env)
+command_return_t exec(command_t command)
 {
     int child;
     int return_value;
-    struct sigaction sa;
-    struct sigaction old_sa;
+    pipes_t pipes;
+    command_return_t ret;
 
-    sa.sa_handler = signal_handler;
+    pipe(pipes.stdin);
+    pipe(pipes.stdout);
     if ((child = fork())) {
-        sigaction(SIGINT, &sa, &old_sa);
-        return_value = wait_loop(child);
-        sigaction(SIGINT, &old_sa, NULL);
+        return parent_exec(command, pipes, child);
     } else {
-        execve(binary, argv, env_to_array(env));
-        return 0;
+        child_exec(command, pipes);
+        exit(0);
     }
 }

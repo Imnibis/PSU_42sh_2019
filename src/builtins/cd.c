@@ -33,25 +33,26 @@ int try_chdir(char *dir)
     return 0;
 }
 
-int builtin_cd(int argc, char **argv, dictionary_t **env_vars)
+command_return_t builtin_cd(int argc, char **argv, dictionary_t **env_vars)
 {
     char *dir;
     char *temp;
+    command_return_t ret;
 
+    ret.stdout = "";
+    ret.return_value = -1;
     if (argc < 2) dir = "~";
     else if (!my_strcmp(argv[1], "-")) {
         temp = dict_get(*env_vars, "OLDPWD");
-        if (!temp) return -1;
+        if (!temp) return ret;
         dir = my_strdup(temp);
     } else dir = my_strdup(argv[1]);
     dir = cd_replace_home(*env_vars, dir);
-    if (!dir) return -1;
-    if (try_chdir(dir)) return -1;
-    temp = dict_get(*env_vars, "PWD");
+    if (!dir || try_chdir(dir)) return ret;
+    temp = my_free_assign(dir, dict_get(*env_vars, "PWD"));
     if (temp) *env_vars = env_set(*env_vars, "OLDPWD", temp);
     temp = getcwd(NULL, 0);
-    *env_vars = env_set(*env_vars, "PWD", temp);
-    free(temp);
-    free(dir);
-    return 0;
+    *env_vars = my_free_assign(temp, env_set(*env_vars, "PWD", temp));
+    ret.return_value = 0;
+    return ret;
 }
