@@ -72,5 +72,6 @@ command_return_t parse_pipes(char *command, dictionary_t **env_vars,
     dictionary_t *builtin);
 command_return_t parse_command(char *command, dictionary_t **env_vars,
     dictionary_t *builtins, pipe_param_t params);
+int display_history(int argc, char **argv, dictionary_t **env);
 
 #endif /* !SHELL_H_ */

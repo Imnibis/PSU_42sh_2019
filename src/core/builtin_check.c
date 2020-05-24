@@ -1,8 +1,8 @@
 /*
-** EPITECH PROJECT, 2020
+** EPITECH PROJECT, 2019
 ** PSU_42sh_2019
 ** File description:
-** builtin_check
+** builtin_check.c
 */
 
 #include "shell.h"
