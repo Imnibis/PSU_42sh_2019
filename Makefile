@@ -17,6 +17,7 @@ SRC		=	src/main.c	\
 			src/core/environment.c \
 			src/core/builtin_check.c \
 			src/core/command_check.c \
+			src/core/redirection.c \
 			src/core/pipe.c	\
 			src/core/exec.c \
 			src/builtins/cd.c \
@@ -25,7 +26,7 @@ SRC		=	src/main.c	\
 			src/builtins/env.c	\
 			src/builtins/exit.c	\
 			src/extra/get_uid.c	\
-			src/extra/history.c
+			src/extra/history.c	\
 
 OBJ		=	$(SRC:.c=.o)
 

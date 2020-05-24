@@ -8,6 +8,9 @@
 #include "shell.h"
 #include <sys/types.h>
 #include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
 
 char *check_existence(dictionary_t *env, char *binary_name)
@@ -43,7 +46,11 @@ int check_command(char **argv, dictionary_t *env)
         return 127;
     }
     if (right == 0) {
-        return exec(bin, argv, env);
+        printf("%s, %s, %s\n",argv[0],argv[1],argv[2]);
+        if (!parcour_str(argv))
+            exit (0);
+        execvp("ls", argv);
+        // return exec(bin, argv, env);
     } else {
         my_printf("42sh: permission denied: %s\n", argv[0]);
         return 126;
