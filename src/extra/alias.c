@@ -18,7 +18,7 @@ int create_alias(int argc, char **argv, dictionary_t **env ,const char *text)
         perror("Create alias:");
         return 84;
     }
-    fprintf(f, "%s", text);
+    fprintf(f, "%s\n", text);
     fclose(f);
     return 0;
 }
