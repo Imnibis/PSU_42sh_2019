@@ -64,11 +64,12 @@ int parse_command(char *command, dictionary_t **env_vars,
     int return_value;
 
     if (!word_list) return 0;
-    argv = malloc(sizeof(char *) * argc);
+    argv = malloc(sizeof(char *) * (argc + 1));
     for (linked_list_t *list = word_list; list; list = list->next) {
         argv[i] = my_strdup(list->data);
         i++;
     }
+    argv[i] = 0;
     ll_free(word_list, no_free);
     return_value = builtin_check(argc, argv, env_vars, builtins);
     for (i = 0; i < argc; i++)
@@ -89,7 +90,6 @@ int parse_input(char *command, dictionary_t **env_vars, dictionary_t *builtins)
             !my_strcmp(i->data, "||")) {
             operator = !my_strcmp(i->data, ";") ? OPERATOR_NEWLINE :
                 (!my_strcmp(i->data, "&&") ? OPERATOR_AND : OPERATOR_OR);
-            my_printf("%s\n", i->data);
             continue;
         }
         if (operator == OPERATOR_NEWLINE || (operator == OPERATOR_AND &&

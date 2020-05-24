@@ -31,7 +31,7 @@ char *check_existence(dictionary_t *env, char *binary_name)
     return 0;
 }
 
-int check_command(int argc, char **argv, dictionary_t *env)
+int check_command(char **argv, dictionary_t *env)
 {
     char *binary_name = argv[0];
     char *bin = check_existence(env, binary_name);
@@ -43,7 +43,7 @@ int check_command(int argc, char **argv, dictionary_t *env)
         return 127;
     }
     if (right == 0) {
-        my_printf("Found: %s\n", bin);
+        return exec(bin, argv, env);
     } else {
         my_printf("42sh: permission denied: %s\n", argv[0]);
         return 126;

@@ -15,5 +15,5 @@ int builtin_check(int argc, char **argv, dictionary_t **env,
     if (builtin)
         return builtin(argc, argv, env);
     else
-        return check_command(argc, argv, *env);
+        return check_command(argv, *env);
 }

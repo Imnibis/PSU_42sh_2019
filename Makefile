@@ -16,13 +16,14 @@ SRC		=	src/main.c	\
 			src/core/parse.c \
 			src/core/environment.c \
 			src/core/builtin_check.c \
+			src/core/command_check.c \
+			src/core/exec.c \
 			src/builtins/cd.c \
 			src/builtins/dict.c \
 			src/builtins/echo.c \
 			src/builtins/env.c	\
 			src/builtins/exit.c	\
 			src/extra/get_uid.c	\
-			src/core/command_check.c	\
 
 OBJ		=	$(SRC:.c=.o)
 
